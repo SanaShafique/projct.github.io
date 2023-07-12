@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: azure;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      background-color: azure;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type="submit"] {
+      background-color: #008CBA;
+    }
+
+    #billAmount {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #roomNumbers {
+      margin-top: 10px;
+    }
+
+    #goBackButton {
+      position: absolute;
+      width:10%;
+      padding :10px;
+      top: 10px;
+      left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Booking Form</h2>
+  <div class="bform">
+    <form id="bookingForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required><br>
+
+      <label for="rooms">Number of Rooms:</label>
+      <input type="number" id="rooms" min="1" required><br>
+
+      <label for="days">Number of Days:</label>
+      <input type="number" id="days" min="1" required><br>
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" required><br>
+
+      <button type="button" id="calculateBillButton" onclick="calculateBill()">Calculate Bill</button>
+
+      <p id="billAmount"></p>
+
+      <div id="roomNumbers"></div>
+
+      <button class="btn" type="submit">Book Now</button>
+    </form>
+  </div>
+
+  <button id="goBackButton" onclick="goBack()">Go Back</button>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function calculateBill() {
+      var rooms = parseInt(document.getElementById("rooms").value);
+      var days = parseInt(document.getElementById("days").value);
+
+      var fare = 5000;
+      var billAmount = rooms * days * fare;
+
+      document.getElementById("billAmount").textContent = "Total Amount: Rs. " + billAmount;
+
+      var roomNumbersHtml = "";
+      for (var i = 1; i <= rooms; i++) {
+        roomNumbersHtml += "Room " + i + "<br>";
+      }
+      document.getElementById("roomNumbers").innerHTML = roomNumbersHtml;
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var name = document.getElementById("name").value;
+      var rooms = document.getElementById("rooms").value;
+      var days = document.getElementById("days").value;
+      var date = document.getElementById("date").value;
+
+      var booking = {
+        name: name,
+        rooms: rooms,
+        days: days,
+        date: date
+      };
+
+      var bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+      bookings.push(booking);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+
+      alert("Booking successful!");
+      window.location.href = "hotels.html";
+    });
+  </script>
+</body>
+</html>

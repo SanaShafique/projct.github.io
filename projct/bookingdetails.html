@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body{
+        background-color: azure;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+
+      padding: 8px;
+      text-align: left;
+    }
+        th {
+      background-color: cyan;
+    }
+    #goBackButton {
+      position: absolute;
+      width:10%;
+      padding :10px;
+     margin-top: 10px;
+     background-color: #4CAF50;
+      left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Booking Details</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Hotel</th>
+        <th>Rooms</th>
+        <th>Days</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="bookingTableBody"></tbody>
+  </table>
+  <button id="goBackButton" onclick="goBack()">Go Back</button>
+  <script>
+    // Fetch bookings from localStorage
+    var bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    var hotelNames = ["Tourist Cottage Hunza", "Heaven Lodge", "Serena Hotel"];
+
+    // Get the table body element
+    var tableBody = document.getElementById("bookingTableBody");
+
+    // Generate table rows for each booking
+    bookings.forEach(function(booking) {
+      var row = document.createElement("tr");
+
+      var nameCell = document.createElement("td");
+      nameCell.textContent = booking.name;
+      row.appendChild(nameCell);
+
+      var hotelCell = document.createElement("td");
+      var randomHotelIndex = Math.floor(Math.random() * hotelNames.length);
+  hotelCell.textContent = hotelNames[randomHotelIndex];
+  row.appendChild(hotelCell);
+
+      var roomsCell = document.createElement("td");
+      roomsCell.textContent = booking.rooms;
+      row.appendChild(roomsCell);
+
+      var daysCell = document.createElement("td");
+      daysCell.textContent = booking.days;
+      row.appendChild(daysCell);
+
+      var dateCell = document.createElement("td");
+      dateCell.textContent = booking.date;
+      row.appendChild(dateCell);
+
+      tableBody.appendChild(row);
+
+    });
+  </script>
+  <script>
+    function goBack(){
+        window.location.href="hotels.html";
+    }
+  </script>
+</body>
+</html>
